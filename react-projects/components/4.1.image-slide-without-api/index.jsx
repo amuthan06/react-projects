@@ -12,24 +12,20 @@ function ImageSliderWithoutApi() {
 
   const handleReduceSlider = () => {
     setLoading(true);
-    if (slideNumber > 1) {
-      setSlideNumber((prev) => prev - 1);
-    }
+    setSlideNumber((prev) => prev - 1);
+    
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   };
   const handleIncreaseSlider = () => {
-    setImage(true);
     setLoading(true);
-    if (slideNumber < image.length - 1) {
-      setSlideNumber((prev) => prev + 1);
-    }
+    setSlideNumber((prev) => prev + 1);
+    
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   };
-  console.log("=>", loading);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -53,13 +49,25 @@ function ImageSliderWithoutApi() {
       )}
       <div className="mt-4 flex gap-4">
         <button
-          onClick={handleReduceSlider}
+          onClick={slideNumber>1? handleReduceSlider: null}
           className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600"
         >
           -
         </button>
-        <button
-          onClick={handleIncreaseSlider}
+        {image.map((value, index) => (
+          <p
+            key={index}
+            className={`px-3 py-1 rounded-md font-semibold ${
+              index + 1 === slideNumber
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {value.id}
+          </p>
+        ))}
+        <button 
+          onClick={ slideNumber<image.length? handleIncreaseSlider: null}
           className="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600"
         >
           +
